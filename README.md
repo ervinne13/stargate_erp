@@ -1,1 +1,1 @@
-# stargate_erp
+# Stargate ERP
