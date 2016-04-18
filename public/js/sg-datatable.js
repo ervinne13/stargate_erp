@@ -4,50 +4,45 @@
  * and open the template in the editor.
  */
 
-var sgdatatable = {
-    ACTIONS_COLUMN: "sg_actions"
-};
+/* global _, globals */
+
+var sgdatatable = {};
 
 (function (sgdatatable) {
 
-    sgdatatable.datatable = function (config) {
+    sgdatatable.generateAccessInlineView = function (id, accessList, accessInlineTemplateSelector) {
 
-        if (!config) {
-            console.err("please define config");
-            return;
+        if (!accessInlineTemplateSelector) {
+            accessInlineTemplateSelector = "#access_inline_template";
         }
 
-        var actionsTemplate;
+        var accessInlineTemplate = _.template($(accessInlineTemplateSelector).html());
+        var viewHtml = "";
 
-        if (config.actionColumn && config.templateSelector) {
-            actionsTemplate = _.template($(config.templateSelector).html());
+        for (var i in accessList) {
+            viewHtml += accessInlineTemplate(adaptAccess(accessList[i], id));
         }
 
-        $('#users-table').dataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: config.url,
-                contentType: 'application/datatable'
-            },
-            columns: [
-                {data: 'U_User_id'},
-                {data: 'U_User_id'},
-                {data: 'U_Username'},
-                {data: 'P_Position'}
-            ],
-            columnDefs: [
-                {
-                    render: function (data, type, row) {
-                        return actionsTemplate({id: data});
-                    },
-                    targets: [0],
-                    orderable: false,
-                    searchable: false
-                }
-            ]
-        });
+        return viewHtml;
 
     };
+
+    function adaptAccess(access, id) {
+
+        var accessName = access["access_name"].toLowerCase();
+
+        if (access["is_get"] && accessName == "view") {
+            access["href"] = globals.baseUrl + "/" + id;
+        } else if (access["is_get"]) {
+            access["href"] = globals.baseUrl + "/" + globals.currentModuleTrigger + "/" + id + "/" + accessName;
+        } else {
+            access["href"] = "javascript:void(0)";
+        }
+
+        access["id"] = id;
+
+        return access;
+
+    }
 
 })(sgdatatable);

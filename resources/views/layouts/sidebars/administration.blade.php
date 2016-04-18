@@ -72,7 +72,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('administration/numberseries') }}">
+                                        <a href="{{ url('administration/no-series') }}">
                                             <i class='fa fa-cube'></i> 
                                             <span>Number Series</span>
                                         </a>

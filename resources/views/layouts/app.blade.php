@@ -29,7 +29,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     |               | sidebar-mini                            |
     |---------------------------------------------------------|
     -->
-    <body class="skin-purple sidebar-mini">
+    <body class="{{env("APP_THEME_SKIN")}} sidebar-mini">
         <div class="wrapper">
 
             @include('layouts.partials.mainheader')

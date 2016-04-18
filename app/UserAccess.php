@@ -14,4 +14,14 @@ class UserAccess extends Model {
         return $this->belongsTo("App\UserProfile", "UP_FK_Access_id", "UA_Access_id");
     }
 
+    public function scopeUserId($query, $userId) {
+        return $query
+                        ->join('tblCOM_UserProfile', 'UP_FK_Access_id', '=', 'UA_Access_id')
+                        ->where('UP_FK_User_id', $userId);
+    }
+
+    public function scopeHeader($query) {
+        return $query->where("UA_Header", 1);
+    }
+
 }

@@ -14,4 +14,8 @@ class UserProfile extends Model {
         return $this->hasOne("App\UserAccess", "UA_Access_id", "UP_FK_Access_id");
     }
 
+    public function scopeUserId($query, $userId) {
+        return $query->where("UP_FK_User_id", $userId);
+    }
+
 }

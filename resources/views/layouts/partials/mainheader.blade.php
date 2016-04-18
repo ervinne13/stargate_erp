@@ -20,8 +20,13 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        @if(isset($currentModuleHeader))              
+                        <i class="{{$currentModuleHeader["M_Icon"]}}"></i> {{$currentModuleHeader["M_Description"]}}
+                        <span class="caret"></span>
+                        @else
                         <i class="fa fa-dashboard"></i> Dashboard
                         <span class="caret"></span>
+                        @endif
                     </a>       
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li>
@@ -29,22 +34,15 @@
                                 <i class="fa fa-dashboard"></i> Dashboard
                             </a>
                         </li>
-                        <li>
-                            <a href="/administration">
-                                <i class="fa fa-gear"></i> Administration
+                        @if (isset($moduleHeaders))
+                        @foreach($moduleHeaders AS $moduleHeader)
+                        <li {{$moduleHeader["M_Module_id"] == $currentModuleHeader["M_Module_id"] ? 'class="active"' : ""}}>
+                            <a href="/{{$moduleHeader["M_Trigger"]}}">
+                                <i class="{{$moduleHeader["M_Icon"]}}"></i> {{$moduleHeader["M_Description"]}}
                             </a>
                         </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="/hr">
-                                <i class="fa fa-user"></i> Human Resource
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/payroll">
-                                <i class="fa fa-money"></i> Payroll
-                            </a>
-                        </li>
+                        @endforeach
+                        @endif
                     </ul>
                 </li
 

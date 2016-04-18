@@ -23,7 +23,18 @@ Route::get('/', function () {
 
 Route::resource('/dashboard', 'DashboardController');
 
-Route::get('/administration', 'AdministrationController@index');
-Route::get('/administration/users/datatable/{testType}', 'Administration\UsersController@datatable');
-Route::get('/administration/users/datatable', 'Administration\UsersController@datatable');
-Route::resource('/administration/users', 'Administration\UsersController');
+Route::group(['prefix' => 'administration', 'middleware' => ['auth']], function () {
+    Route::get('/', 'Administration\AdministrationController@index');
+
+    //  Users
+    Route::get('users/datatable', 'Administration\UsersController@datatable');
+    Route::resource('users/{id}/settings', 'Administration\UsersController@settings');
+    Route::resource('users', 'Administration\UsersController');
+
+    //  Modules
+    Route::get('modules/datatable', 'Administration\ModulesController@datatable');
+    Route::resource('modules', 'Administration\ModulesController');
+
+    Route::get('no-series/datatable', 'Administration\NumberSeriesController@datatable');
+    Route::resource('no-series', 'Administration\NumberSeriesController');
+});

@@ -136,11 +136,12 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,        
+        App\Providers\RouteServiceProvider::class,
         
-        Yajra\Datatables\DatatablesServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,        
         
-//        App\Providers\MD5HashServiceProvider::class,
+        App\Providers\ModuleServicesProvider::class,        
+        App\Providers\ModulePropertiesInitializerServiceProvider::class,        
     ],
     /*
       |--------------------------------------------------------------------------
