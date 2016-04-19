@@ -6,7 +6,11 @@
 
 /* form controls sizing */
 .small-field-form .select2 {
-    padding-right: 1px;
+    padding-right: 1px;        
+}
+
+.select2-selection__arrow {
+    top: -4px;
 }
 
 .small-field-form .form-control {

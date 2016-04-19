@@ -150,6 +150,10 @@ class Module extends SGModel {
         return $this->belongsTo('App\Module', 'M_Parent', 'M_Module_id');
     }
 
+    public function moduleChildren() {
+        return $this->hasMany('App\Module', 'M_Parent', 'M_Module_id')->orderBy('M_Module_id');
+    }
+
     public function scopeHeaders($query) {
         return $query
                         ->where('M_Header', 1)

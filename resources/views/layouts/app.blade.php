@@ -30,8 +30,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     |---------------------------------------------------------|
     -->
     <body class="{{env("APP_THEME_SKIN")}} sidebar-mini">
-        <div class="wrapper">
-
+        <div class="wrapper">            
             @include('layouts.partials.mainheader')
 
             @if (isset($sidebar))

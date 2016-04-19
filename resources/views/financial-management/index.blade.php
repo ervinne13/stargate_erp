@@ -5,18 +5,11 @@ $sidebar = "layouts.sidebars.dynamic";
 @extends('layouts.app')
 
 @section('htmlheader-title')
-Administration
-@endsection
-
-@section('breadcrumb-html')
-<ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-    <li class="active">Here</li>
-</ol>
+Financial Management
 @endsection
 
 @section('contentheader-title')
-Administration
+Financial Management
 @endsection
 
 @section('contentheader-description')

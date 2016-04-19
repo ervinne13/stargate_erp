@@ -38,3 +38,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['auth']], function 
     Route::get('no-series/datatable', 'Administration\NumberSeriesController@datatable');
     Route::resource('no-series', 'Administration\NumberSeriesController');
 });
+
+Route::group(['prefix' => 'financial-management', 'middleware' => ['auth']], function () {
+    Route::get('/', 'FinancialManagement\FinancialManagementController@index');
+});
