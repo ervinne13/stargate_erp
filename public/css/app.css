@@ -1,3 +1,8 @@
+
+body {
+    /*font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+}
+
 .red-round-border {
     border:solid 1px #F78B3E;
     border-radius: 2px;
@@ -5,6 +10,15 @@
 }
 
 /* form controls sizing */
+.sg-small-field-group {
+    margin-bottom: 0px;
+}
+
+.form-control.sg-small-field {
+    height: 24px !important;    
+    margin-top: 6px;    
+}
+
 .small-field-form .select2 {
     padding-right: 1px;        
 }
@@ -13,13 +27,20 @@
     top: -4px;
 }
 
-.small-field-form .form-control {
-    height: 26px;
+/*.small-field-form .select2-selection select2-selection--single{*/
+.select2-container--default .select2-selection--single, .select2-selection .select2-selection--single {    
+    min-height: 24px !important;
+    height: 24px !important;
+    padding: 2px 12px;
 }
 
-.small-field-form .select2-selection {
+/*.select2-selection .select2-selection--multiple {
     height: 26px !important;
     padding: 2px 12px !important;
+}*/
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top:-4px;
 }
 
 .small-field-form .form-group {
@@ -31,3 +52,27 @@ p.form-view-value {
 }
 
 /* *end of form controls sizing */
+
+/* select2 customizations */
+
+.select2-wide-dropdown-500 {
+    width: 500px !important;
+}
+
+.select2-wide-dropdown-600 {
+    width: 600px !important;
+}
+
+.select2-wide-dropdown-700 {
+    width: 700px !important;
+}
+
+/* *end of select2 customizations */
+
+/* calendar customizations */
+
+.fc-state-highlight {
+    background: #82ce80 !important;
+}
+
+/* *end of calendar customizations */

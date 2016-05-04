@@ -4,16 +4,26 @@
  * and open the template in the editor.
  */
 
-/* global sgdatatable */
+/* global sgdatatable, globals, _ */
 
 (function () {
 
     var inlineCheckboxTemplate;
 
+    var datatable;
+    var moduleProcessor;
+    var moduleListProcessor;
+
     $(document).ready(function () {
 
         initializeTemplates();
         initializeDatatable();
+
+        moduleProcessor = new ModuleProcessor([], globals.currentModule);
+
+        moduleListProcessor = new ModuleListProcessor(datatable, globals.currentModule, moduleProcessor);
+        moduleListProcessor.initializeActions();
+        moduleListProcessor.initializeBatchFunctions();
 
     });
 
@@ -22,7 +32,7 @@
     }
 
     function initializeDatatable() {
-        $('#users-table').dataTable({
+        datatable = $('#users-table').DataTable({
             processing: true,
             serverSide: true,
             search: {

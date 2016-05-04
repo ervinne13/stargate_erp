@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\DB;
 trait SearchableByEncryptedId {
 
     public function scopeEncryptedId($query, $id) {
-        return $query->where(DB::raw('md5("' . $this->primaryKey . '")'), $id)->first();
+        return $query
+                        ->select(["*", DB::raw('md5("' . $this->primaryKey . '") AS id')])
+                        ->where(DB::raw('md5("' . $this->primaryKey . '")'), $id)
+                        ->first();
     }
 
 }

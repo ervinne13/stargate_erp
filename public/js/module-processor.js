@@ -5,6 +5,8 @@
  * @class ModuleProcessor
  * @param {Object} configs 
  *  The configuration of the module header. 
+ * @param {Object} module
+ *  The module to process 
  * @description 
  *  Abstracts out the functionality of processing saving and updating header records of a module.
  *  IMPORTANT! This class is dependent on certain DOM elements as specified in the configuration or by 
@@ -37,6 +39,11 @@ function ModuleProcessor(configs, module) {
     $('#' + this.updateNewButton).addClass('action-button');
     $('#' + this.updateCloseButton).addClass('action-button');
     $('#' + this.closeButton).addClass('action-button');
+
+    //  for batch functions
+    this.checkboxSelector = ".doc:checked";
+    this.setActiveFunction = "active";
+    this.setInactiveFunction = "inactive";
 
 }
 
@@ -101,6 +108,37 @@ function ModuleProcessor(configs, module) {
 
     ModuleProcessor.prototype.loadNumberSeries = function (numberSeriesFieldSelector, onNumberSeriesLoaded) {
         alert('to be implemented');
+    };
+
+    ModuleProcessor.prototype.batchSetActive = function (active) {
+
+        //  get all selected records
+        var documentIdList = [];
+        var formData = new FormData();
+
+        $(this.checkboxSelector).each(function () {
+            documentIdList.push($(this).attr('id'));
+        });
+
+        if (documentIdList.length <= 0) {
+            bootbox.alert({
+                title: "Validation",
+                message: "Please select documents to process"
+            });
+            return;
+        }
+
+        console.log(documentIdList);
+
+        formData.append("idList", documentIdList);
+
+        var action = active ? this.setActiveFunction : this.setInactiveFunction;
+
+        this.sendAction(action, '', formData, function (response) {
+            console.log(response);
+            window.location.reload();
+        });
+
     };
 
     //  Facade function, initializeUI + initializeActions
@@ -202,7 +240,8 @@ function ModuleProcessor(configs, module) {
     };
 
     ModuleProcessor.prototype.getCSRF = function () {
-        return $(this.form).find('[name=_token]').val();
+//        return $(this.form).find('[name=_token]').val();
+        return $('meta[name=_token]').attr('content');
     };
 
     ModuleProcessor.prototype.sendAction = function (action, id, formData, onFinishCallback) {
@@ -214,6 +253,15 @@ function ModuleProcessor(configs, module) {
             formData.append("_method", "PUT");
         } else if (action === 'store') {
             url = _this.moduleURL;
+        } else {
+
+            formData.append("_method", "PUT");
+
+            if (id.length > 0) {
+                url = _this.moduleURL + "/" + id + "/" + action;
+            } else {
+                url = _this.moduleURL + "/" + action;
+            }
         }
 
         $.ajax({
@@ -300,6 +348,8 @@ function ModuleProcessor(configs, module) {
                 value: this.processDetailsData(this.detailTable.getSourceData())
             });
         }
+
+        console.log(data);
 
         $.each(data, function (key, input) {
             if (input.value && input.value.length <= 0) {

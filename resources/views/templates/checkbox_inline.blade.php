@@ -1,1 +1,1 @@
-<input type="checkbox" class="doc" id="<%=id%>" />
+<input type="checkbox" class="doc" id="<%= {{$idField or "id"}} %>" />

@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User\User;
 use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller {

@@ -20,11 +20,14 @@
     "autoload": {
         "classmap": [
             "database",
-            "App/Libraries"
+            "App/SG"
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "App/SGHelpers/route_helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [

@@ -1,12 +1,8 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta name="base_url" content="{{URL::to('')}}">    
-
-    @if(isset($includeModuleMetaData) && $includeModuleMetaData)
-    <meta name="module_trigger" content="{{$currentModule["M_Trigger"] or ""}}">
-    <meta name="document_id" content="{{$id}}">
-    @endif
+    <meta name="base_url" content="{{URL::to('')}}">
+    <meta name="_token" content="{{ csrf_token() }}">
 
     <title>@yield('htmlheader-title', isset($currentModule) ? $currentModule["M_Description"] : 'Stargate ERP') </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>

@@ -5,7 +5,6 @@ var globals = {};
 
 $(document).ready(function () {
     globals.baseUrl = $('meta[name=base_url]').attr('content');
-    globals.currentModuleTrigger = $('meta[name=module_trigger]').attr('content');
 });
 
 globals.bootboxConfirm = function (options) {

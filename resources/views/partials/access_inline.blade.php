@@ -11,7 +11,7 @@ $trigger             = TRIM($access['UA_Trigger']);
 $generatedProperties = "";
 
 //  REST Compliance
-if (strtolower($access['UA_AccessName']) === 'add') {
+if (strtolower($access['UA_AccessName']) === 'add') {    
     $splittedTrigger = explode('/', $trigger);
     $trigger         = $splittedTrigger[0] . "/" . $splittedTrigger[1] . "/create";
 }

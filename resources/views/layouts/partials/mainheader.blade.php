@@ -67,7 +67,13 @@
                         </li>
                         <li class="footer"><a href="#">View all</a></li>
                     </ul>
-                </li>                             
+                </li>
+                <li>
+                    <a href="{{URL::to('/logout')}}">
+                        <i class="fa fa-sign-out"></i>
+                        Logout
+                    </a>
+                </li>            
                 <!-- Control Sidebar Toggle Button -->
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>

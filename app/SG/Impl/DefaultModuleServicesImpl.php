@@ -2,7 +2,7 @@
 
 namespace App\SG\Impl;
 
-use App\Module;
+use App\Models\Module\Module;
 use App\SG\ModuleServices;
 
 /**
@@ -61,6 +61,24 @@ class DefaultModuleServicesImpl implements ModuleServices {
         return $moduleTree;
     }
 
+    public function getModules($includeFullDescription = FALSE) {
+
+        $modules = Module::NonHeader()->orderBy("M_Description")->get();
+
+        if ($includeFullDescription) {
+            for ($i = 0; $i < count($modules); $i ++) {
+                $topHeader                         = explode('/', $modules[$i]["M_Trigger"])[0];
+                $modules[$i]["M_Full_description"] = $modules[$i]["M_Description"] . " ({$topHeader})";
+            }
+        }
+
+        return $modules;
+    }
+
+    //
+    /*     * ************************************************************************* */
+    //  <editor-fold defaultstate="collapsed" desc="Utility Functions">
+
     private function getRowAccessList($row, $accessList, $statusFieldName) {
         $appendedAccessList = array();
 
@@ -99,4 +117,5 @@ class DefaultModuleServicesImpl implements ModuleServices {
         return $tree;
     }
 
+    //  </editor-fold>
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\Models\User\User;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends Controller {
     /*
@@ -46,11 +46,11 @@ use AuthenticatesAndRegistersUsers,
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return Validator
      */
     protected function validator(array $data) {
         return Validator::make($data, [
-                    'U_Username'  => 'required|max:255|unique:tblCOM_User',
+                    'U_Username' => 'required|max:255|unique:tblCOM_User',
                     'U_Password2' => 'required|min:6|confirmed',
         ]);
     }
@@ -62,8 +62,8 @@ use AuthenticatesAndRegistersUsers,
      * @return User
      */
     protected function create(array $data) {
-        return User::create([                    
-                    'U_Username'  => $data['U_Username'],
+        return User::create([
+                    'U_Username' => $data['U_Username'],
                     'U_Password2' => bcrypt($data['U_Password2']),
         ]);
     }

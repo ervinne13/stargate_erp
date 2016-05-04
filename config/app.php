@@ -140,8 +140,12 @@ return [
         
         Yajra\Datatables\DatatablesServiceProvider::class,        
         
-        App\Providers\ModuleServicesProvider::class,        
-        App\Providers\ModulePropertiesInitializerServiceProvider::class,        
+        App\Providers\ModuleServicesProvider::class,
+        App\Providers\StaticDataLookupServiceProvider::class,
+        App\Providers\ModulePropertiesInitializerServiceProvider::class,
+        
+        App\Providers\Administration\ReasonServiceProvider::class,                
+        App\Providers\Administration\UserServiceProvider::class,                
     ],
     /*
       |--------------------------------------------------------------------------
@@ -185,5 +189,8 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        
+        //  custom aliases
+        'SGForm'      => App\SGView\SGForm::class,
     ],
 ];

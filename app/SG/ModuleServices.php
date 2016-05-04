@@ -26,5 +26,7 @@ interface ModuleServices {
      */
     public function appendInlineActions($modelList, $accessList, $statusFieldName = NULL);
 
-    public function listToTree($moduleList);    
+    public function listToTree($moduleList);
+
+    public function getModules($includeFullDescription = FALSE);
 }

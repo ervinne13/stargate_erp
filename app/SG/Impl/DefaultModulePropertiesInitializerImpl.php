@@ -2,7 +2,7 @@
 
 namespace App\SG\Impl;
 
-use App\Module;
+use App\Models\Module\Module;
 use App\SG\ModulePropertiesInitializer;
 
 /**

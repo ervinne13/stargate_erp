@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NumberSeriesRequest;
-use App\Module;
-use App\NumberSeriesModel;
+use App\Models\Administration\StoreProfile;
+use App\Models\Module\Module;
+use App\Models\Module\NumberSeries;
 use App\SG\ModuleServices;
-use App\StoreProfile;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,13 +37,13 @@ class NumberSeriesController extends Controller {
         $currentUser = Auth::user();
         $tableAccess = Module::ModuleUserAccessList($this->moduleId, $currentUser->U_User_id, 'outside')->get();
 
-        $datatable = Datatables::of(NumberSeriesModel::datatable())
+        $datatable = Datatables::of(NumberSeries::datatable())
                 ->setRowId('NS_Id')
                 ->make(true);
 
-        $datatable["data"] = $moduleServices->appendInlineActions($datatable["data"], $tableAccess);
-
-        return response()->json($datatable);
+        $datatableAssoc         = $datatable->getData(true);
+        $datatableAssoc["data"] = $moduleServices->appendInlineActions($datatableAssoc["data"], $tableAccess);
+        return response()->json($datatableAssoc);
     }
 
     /**
@@ -51,13 +51,14 @@ class NumberSeriesController extends Controller {
      *
      * @return Response
      */
-    public function create() {
-        $numberSeries = new NumberSeriesModel();
+    public function create(ModuleServices $moduleServices) {
+        $numberSeries = new NumberSeries();
 
         $viewData             = $this->getDefaultViewData();
-        $viewData['formData'] = $this->initializeFormData($numberSeries);
+        $viewData['mode']     = 'create';
+        $viewData['formData'] = $this->initializeFormData($moduleServices, $numberSeries);
 
-        return view('administration.numberseries.create', $viewData);
+        return view('administration.numberseries.module', $viewData);
     }
 
     /**
@@ -68,7 +69,7 @@ class NumberSeriesController extends Controller {
      */
     public function store(NumberSeriesRequest $request) {
         try {
-            $numberSeries = new NumberSeriesModel();
+            $numberSeries = new NumberSeries();
             $this->requestToModel($numberSeries, $request);
             $numberSeries->save();
             return $numberSeries;
@@ -83,14 +84,14 @@ class NumberSeriesController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function show($id) {
-        $numberSeries = NumberSeriesModel::EncryptedId($id);
+    public function show(ModuleServices $moduleServices, $id) {
+        $numberSeries = NumberSeries::EncryptedId($id);
 
-        $viewData                     = $this->getDefaultViewData();
-        $viewData['formData']         = $this->initializeFormData($numberSeries);
-        $viewData['formData']['mode'] = 'view';
+        $viewData             = $this->getDefaultViewData();
+        $viewData['mode']     = 'view';
+        $viewData['formData'] = $this->initializeFormData($moduleServices, $numberSeries);
 
-        return view('administration.numberseries.view', $viewData);
+        return view('administration.numberseries.module', $viewData);
     }
 
     /**
@@ -99,14 +100,15 @@ class NumberSeriesController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function edit($id) {
-        $numberSeries = NumberSeriesModel::EncryptedId($id);
+    public function edit(ModuleServices $moduleServices, $id) {
+        $numberSeries = NumberSeries::EncryptedId($id);
 
         $viewData             = $this->getDefaultViewData();
-        $viewData["uniqueId"] = $id;
-        $viewData['formData'] = $this->initializeFormData($numberSeries);
+        $viewData["id"]       = $id;
+        $viewData['mode']     = 'edit';
+        $viewData['formData'] = $this->initializeFormData($moduleServices, $numberSeries);
 
-        return view('administration.numberseries.edit', $viewData);
+        return view('administration.numberseries.module', $viewData);
     }
 
     /**
@@ -119,7 +121,7 @@ class NumberSeriesController extends Controller {
     public function update(NumberSeriesRequest $request, $id) {
 
         try {
-            $numberSeries = NumberSeriesModel::EncryptedId($id);
+            $numberSeries = NumberSeries::EncryptedId($id);
             $this->requestToModel($numberSeries, $request);
             $numberSeries->save();
             return $numberSeries;
@@ -136,7 +138,7 @@ class NumberSeriesController extends Controller {
      */
     public function destroy($id) {
         try {
-            $numberSeries = NumberSeriesModel::EncryptedId($id);
+            $numberSeries = NumberSeries::EncryptedId($id);
             $numberSeries->delete();
             return "Successfully deleted!";
         } catch (Exception $e) {
@@ -144,9 +146,9 @@ class NumberSeriesController extends Controller {
         }
     }
 
-    private function initializeFormData($numberSeries) {
+    private function initializeFormData(ModuleServices $moduleServices, $numberSeries) {
         $formData              = $numberSeries;
-        $formData['modules']   = Module::SelectableByDescription()->get();
+        $formData['modules']   = $moduleServices->getModules(true);
         $formData['locations'] = StoreProfile::active()->get();
 
         return $formData;

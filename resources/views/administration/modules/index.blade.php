@@ -1,8 +1,5 @@
-<?php
-$sidebar = "layouts.sidebars.administration";
-?>
 
-@extends('layouts.app')
+@extends('layouts.app', ["sidebar" => "layouts.sidebars.administration"])
 
 @section('htmlheader-title')
 Modules
@@ -15,6 +12,9 @@ Modules
 @section('scripts')
 <script type="text/javascript" src="{{ asset('/plugins/datatables/dt-1.10.11/datatables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/plugins/underscore-min.js') }}"></script>
+
+<!--Contains default current module and module header info-->
+@include("partials.module_js_info")
 
 <script type="text/javascript" src="{{ asset('/js/sg-datatable.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/administration/modules/index.js') }}"></script>
